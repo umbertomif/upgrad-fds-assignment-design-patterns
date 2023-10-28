@@ -31,7 +31,6 @@ public class RestServiceGenerator {
                     return clientHttpResponse;
                     })
                 .build();
-        
         //return restTemplate object
         return restTemplate;
     }
