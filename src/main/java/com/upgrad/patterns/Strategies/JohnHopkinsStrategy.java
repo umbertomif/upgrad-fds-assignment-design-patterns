@@ -36,20 +36,30 @@ public class JohnHopkinsStrategy implements IndianDiseaseStat {
 
 	@Override
 	public String GetActiveCount() {
-
-
 		//try block
+		try {
 			//get response from the getJohnHopkinResponses method
+			JohnHopkinResponse[] johnHopkinResponse = getJohnHopkinResponses();
 			//filter the data based such that country equals India (use getCountry() to get the country value)
+			List<JohnHopkinResponse> indiaJohnHopkinResponse = Arrays.stream(johnHopkinResponse)
+					.filter(jhr -> jhr.getCountry().equalsIgnoreCase("India"))
+					.collect(Collectors.toList());
 			//Map the data to "confirmed" value (use getStats() and getConfirmed() to get stats value and confirmed value)
+			List<Float> confirmedIndiaJohnHopkinValue = indiaJohnHopkinResponse.stream()
+					.map(ijhr -> ijhr.getStats().getConfirmed())
+					.collect(Collectors.toList());
 			//Reduce the data to get a sum of all the "confirmed" values
+			Float sumValue = confirmedIndiaJohnHopkinValue.stream()
+					.reduce((val1, val2) -> val1 + val2).get();
 			//return the response after rounding it up to 0 decimal places
+			return String.format("%.0f",sumValue);
 		//catch block
+		} catch (Exception ex){
 			//log the error
+			logger.error(ex.getMessage());
 			//return null
-
-
-
+			return null;
+		}
 	}
 
 	private JohnHopkinResponse[] getJohnHopkinResponses() throws IOException {
