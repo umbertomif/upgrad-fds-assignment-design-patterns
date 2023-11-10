@@ -19,16 +19,13 @@ public class IndiaDiseaseStatFactory {
         this.johnHopkinsStrategy = johnHopkinsStrategy;
     }
 
-    
-    //create a method named GetInstance with return type as IndianDiseaseStat and parameter of type sourceType
-    	//create a conditional statement
-    	//if the sourceType is JohnHopkins
-    		//return johnHopkinsStrategy
-    	//if the sourceType is DiseaseSh
-    		//return diseaseShStrategy
-    
-    	//create a message for invalid disease strategy/sourceType
-    	//throw the message as an Illegal argument exception
-    
-    
+    public IndianDiseaseStat GetInstance(SourceType sourceType){
+        if(sourceType.toString().equalsIgnoreCase("JohnHopkins"))
+            return johnHopkinsStrategy;
+        else if (sourceType.toString().equalsIgnoreCase("DiseaseSh"))
+            return diseaseShStrategy;
+        else
+            new IllegalArgumentException("invalid disease strategy/sourceType");
+        return null;
+    }
 }
